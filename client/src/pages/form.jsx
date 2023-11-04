@@ -7,12 +7,16 @@ import Row from 'react-bootstrap/Row';
 import {useState} from 'react';
 import { useRef } from 'react';
 import axios from "axios";
+import ShowNavigationBar from "./navBarComponent.jsx";
 //import { Form, Button } from 'react-bootstrap';
 
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
-var st={
-    marginTop:"60px"
+const st={
+    marginTop:"70px",
+
+    
 };
+
 //const [file, setFile] = useState('');
 //const [uploadedFileURL, setUploadedFileURL] = useState('');
 
@@ -64,28 +68,34 @@ function FormInput() {
   }
 };
   return (
+    <div><ShowNavigationBar /> 
     <Container style={st}>
+  
     <Form onSubmit={handleSubmit} >
     <div>
      <h5>Personal Details</h5>
      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridEmail">
-        <FloatingLabel
-        controlId="floatingInput"
+
+
+        <Form.Group as={Col} controlId="formGridFirstName">
+          <FloatingLabel controlId="floatingInput"
         label="First Name"
         className="mb-3">
-          <Form.Control  placeholder="Enter First Name" name="FirstName" onChange={handleInputChange} 
-          value={formData.fname} />
+          <Form.Control  placeholder="First Name" onChange={handleInputChange} name="fname" value={formData.fname}/>
           </FloatingLabel>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridPassword">
+
+        <Form.Group as={Col} controlId="formGridLastName">
           <FloatingLabel controlId="floatingInput"
         label="Last Name"
         className="mb-3">
-          <Form.Control  placeholder="Last Name" name="LastName"  onChange={handleInputChange} value={formData.lname}/>
+          <Form.Control  placeholder="Last Name" onChange={handleInputChange} name="lname" value={formData.lname}/>
           </FloatingLabel>
         </Form.Group>
+
+
+
       </Row>
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
@@ -96,25 +106,30 @@ function FormInput() {
           </FloatingLabel>
         </Form.Group>
 
+       
         <Form.Group as={Col} controlId="formGridPassword">
           <FloatingLabel controlId="floatingInput"
         label="Password"
         className="mb-3">
-          <Form.Control type="password" placeholder="Password" onChange={handleInputChange} name="password" value={formData.pass}/>
-          </FloatingLabel>
-        </Form.Group>
-      </Row>
-      <Row className="mb-3">
-        <Form.Group as={Col} controlId="formGridEmail">
-        <FloatingLabel
-        controlId="floatingInput"
-        label="Phone Number"
-        className="mb-3">
-          <Form.Control  placeholder="Enter Phone Number" onChange={handleInputChange} name="phonenumber" value={formData.phone}/>
+          <Form.Control type="password" placeholder="Password" onChange={handleInputChange} name="pass" value={formData.pass}/>
           </FloatingLabel>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridPassword">
+
+
+      </Row>
+      <Row className="mb-3">
+
+        <Form.Group as={Col} controlId="formGridPhone">
+          <FloatingLabel controlId="floatingInput"
+        label="Phone Number"
+        className="mb-3">
+          <Form.Control  placeholder="Phone Number" onChange={handleInputChange} name="phone" value={formData.phone}/>
+          </FloatingLabel>
+        </Form.Group>
+
+
+        <Form.Group as={Col} controlId="formGriddob">
           <FloatingLabel controlId="floatingInput"
         label="Date of Birth (mm/dd/yyyy)"
         className="mb-3">
@@ -151,11 +166,11 @@ function FormInput() {
 
         <Form.Group as={Col} controlId="formGridState">
           <FloatingLabel>
-          <Form.Select defaultValue="Choose...">
-            <option>Karnataka</option>
+          <Form.Select defaultValue="Choose..." name="state" value={formData.state} onChange={handleInputChange}>
+            <option >Karnataka</option>
             <option>Tamil Nadu</option>
             <option>Kerala</option>
-            <option>Andra Pradesh</option>
+            <option>Andhra Pradesh</option>
             <option>Maharastra</option>
             <option>Telangana</option>
             <option>Madhya Pradesh</option>
@@ -206,6 +221,7 @@ function FormInput() {
 
     </Form>
     </Container>
+    </div>
   );
 }
 

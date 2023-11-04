@@ -3,8 +3,11 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown';
+const st={
+  backgroundColor: "#ff8c00"
+};
 function ShowNavigationBar(){
-    return <Navbar expand="lg" bg = "warning" className="bg-body-tertiary">
+    return <Navbar expand="lg" style={st} className="bg-body-tertiary">
         <Container>
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
