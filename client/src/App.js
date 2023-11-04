@@ -13,6 +13,7 @@ import ResetPassword from './pages/resetPass.page.jsx';
 import WelcomePage from "./pages/welcomeUser.page.jsx";
 import ShowNavigationBar from "./pages/navBarComponent.jsx";
 import PageRender from "./pages/cardDisplay.jsx";
+import FormInput from "./pages/form.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/reset-password" element={ <ResetPassword navigate={useNavigate}/> }/>
           <Route path="/welcomepage" element={ <WelcomePage navigate={useNavigate}/> }/>
           <Route path="/PageRender" element={ <PageRender navigate={useNavigate}/> }/>
+          <Route path="/FormInput" element={<FormInput navigate={useNavigate}/> }/>
         </Routes>
     </Router>
   );
