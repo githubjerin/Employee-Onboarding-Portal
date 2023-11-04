@@ -35,7 +35,8 @@ router.post('/signup', async (req, res) => {
 });
 
 router.get('/qrcode', async (req, res) => {
-    qrcode.toDataURL(secret.otpauth_url, function(err, data){
+    qrcode.toDataURL(secret.otpauth_url, async function(err, data){
+        await user.update({ });
         res.status(200).json(data);
     });
 });
@@ -47,32 +48,9 @@ router.post('/login', async (req, res) => {
 
         if (user_detail) {
             const valid = await comparePassword(req.body.password, user_detail.password)
+            
             if (valid) {
-                const verified = speakeasy.totp.verify({
-                    secret: 'AVp7kne5W!>9l>QRBIehN9w3]t?BWSH6',
-                    encoding: 'ascii',
-                    token: req.body.totp
-                });
-                if(verified) {
-                    const token = createToken({ 
-                        email: user_detail.email
-                    });
-                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
-                    res.status(200).json({
-                        token: token
-                    });
-                } else {
-                    res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
-                    res.status(401).json({
-                        error: "Invalid OTP"
-                    });
-                }
-            } else {
-                res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
-                res.status(401).json({
-                    error: "Invalid password"
-                });
-            }
+                res.redirect(`/user/authenticate/${user_detail.email}`);
 
         } else { 
             res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
@@ -80,10 +58,35 @@ router.post('/login', async (req, res) => {
                 message: "Email ID does not exist"
             });
         }
-
+    }ß
     } catch (error){
         res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
         res.status(400).json({ error });
+    }
+});
+
+
+router.get('/authenticate/:email', function(req, res){
+    const user =  user_detail.findOne({ email: req.body.email });
+    //res.redirect('/authenticate',{params:user_detail.secret.ascii})
+    const verified= speakeasy.totp.verify({
+        secret: user_detail.secret.ascii,
+        encoding: 'ascii',
+        token: req.body.totp
+    });
+    if(verified) {
+        const token = createToken({ 
+            email: user_detail.email
+        });
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
+        res.status(200).json({
+            token: token
+        });
+    } else {
+        res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
+        res.status(401).json({
+            error: "Invalid OTP"
+        });
     }
 });
 /* END : LOGIN & AUTHENTICATION */

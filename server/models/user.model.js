@@ -73,8 +73,6 @@ const Schema = mongoose.Schema({
     },
     secret:{
         ascii:{type:String},
-        hex:{type:String},
-        base32:{type:string},
         otpauth_url:{type:string}
     }
 }, {

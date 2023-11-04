@@ -6,7 +6,7 @@ import '../res/css/materialdesignicons.min.css';
 import '../res/css/style.min.css';
 import bg from '../res/images/bg.jpg';
 
-export default function ForgotPassword() {
+export default function OtpAuthentication() {
     const [email, setEmail] = React.useState('');
 
     const navigate = useNavigate();

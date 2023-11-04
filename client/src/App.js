@@ -14,6 +14,7 @@ import WelcomePage from "./pages/welcomeUser.page.jsx";
 import ShowNavigationBar from "./pages/navBarComponent.jsx";
 import PageRender from "./pages/cardDisplay.jsx";
 import FormInput from "./pages/form.jsx";
+import OtpAuthentication from "./pages/otpPortal.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/forgot-password" element={ <ForgotPassword navigate={useNavigate}/> }/>
           <Route path="/reset-password" element={ <ResetPassword navigate={useNavigate}/> }/>
           <Route path="/welcomepage" element={ <WelcomePage navigate={useNavigate}/> }/>
+          <Route path='/otp-authentication' element={ <OtpAuthentication navigate={useNavigate}/> }/>
           <Route path="/PageRender" element={ <PageRender navigate={useNavigate}/> }/>
           <Route path="/FormInput" element={<FormInput navigate={useNavigate}/> }/>
         </Routes>
