@@ -12,6 +12,7 @@ import ForgotPassword from './pages/forgotPass.page.jsx';
 import ResetPassword from './pages/resetPass.page.jsx';
 import WelcomePage from "./pages/welcomeUser.page.jsx";
 import ShowNavigationBar from "./pages/navBarComponent.jsx";
+import OtpAuthentication from "./pages/otpPortal.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/reset-password" element={ <ResetPassword navigate={useNavigate}/> }/>
           <Route path="/welcomepage" element={ <WelcomePage navigate={useNavigate}/> }/>
           <Route path="/ShowNavigationBar" element={ <ShowNavigationBar navigate={useNavigate}/> }/>
+          <Route path="/OtpAuthentication" element={ <OtpAuthentication navigate={useNavigate}/> }/>
         </Routes>
     </Router>
   );
