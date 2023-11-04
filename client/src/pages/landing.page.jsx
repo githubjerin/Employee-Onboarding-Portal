@@ -43,8 +43,8 @@ export default function Landing() {
                 }),
                 credentials: 'include'
             });
-            if (response.status === 429) {
-                navigate(`/OtpAuthentication?email=${email}`);
+            if (response.status === 200) {
+                navigate('/welcomepage');
             } else {
                 alert('Invalid email or password');
             }
