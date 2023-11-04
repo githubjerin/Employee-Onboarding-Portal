@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require('bcryptjs');
 const qrcode = require('qrcode');
 const speakeasy = require('speakeasy');
+const crypto = require('crypto');
 
 const { createToken, comparePassword, maxAge, generateOTP, checkEmail } = require("../modules/jwt-auth.modules.js");
 const isLoggedIn = require("../middleware/isLoggedIn.middleware.js");
@@ -16,12 +17,20 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 10);
+        req.body.checksum = crypto.createHash('sha256').update(JSON.stringify({
+            pan: req.body.pan,
+            aadhar: req.body.aadhar,
+            dob: req.body.dob,
+            address: req.body.address,
+            phone: req.body.phone
+        })).digest('hex');
         const newUser = await user.create(req.body);
         
         newUser.save().then(() => console.log("User added"));
         res.json(newUser);
     } catch (error) {
         res.status(400).json({ error });
+        console.log(error);
     }
 });
 
@@ -86,8 +95,22 @@ router.get('/get-details', isLoggedIn, async (req, res) => {
                                         _id: 0,
                                         __v: 0
                                     });
+    
     if (user_detail) {
-        res.status(200).json(user_detail);
+        const checksum = crypto.createHash('sha256').update(JSON.stringify({
+            pan: req.body.pan,
+            aadhar: req.body.aadhar,
+            dob: req.body.dob,
+            address: req.body.address,
+            phone: req.body.phone
+        })).digest('hex');
+        if(checksum === user_detail.checksum) {
+            res.status(200).json(user_detail);
+        } else {
+            res.status(400).json({ 
+                error: "Checksum mismatch"
+            });
+        }
     } else { 
         res.status(400).json({ 
             error: "User not found"

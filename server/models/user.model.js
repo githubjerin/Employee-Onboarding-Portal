@@ -67,6 +67,9 @@ const Schema = mongoose.Schema({
     phone: {
         type: Number,
         required: true
+    },
+    checksum: {
+        type: String
     }
 }, {
     timestamps: false
