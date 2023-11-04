@@ -11,6 +11,7 @@ import Signup from './pages/signup.page.jsx';
 import ForgotPassword from './pages/forgotPass.page.jsx';
 import ResetPassword from './pages/resetPass.page.jsx';
 import WelcomePage from "./pages/welcomeUser.page.jsx";
+import ShowNavigationBar from "./pages/navBarComponent.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/forgot-password" element={ <ForgotPassword navigate={useNavigate}/> }/>
           <Route path="/reset-password" element={ <ResetPassword navigate={useNavigate}/> }/>
           <Route path="/welcomepage" element={ <WelcomePage navigate={useNavigate}/> }/>
+          <Route path="/ShowNavigationBar" element={ <ShowNavigationBar navigate={useNavigate}/> }/>
         </Routes>
     </Router>
   );
