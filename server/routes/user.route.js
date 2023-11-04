@@ -1,11 +1,14 @@
 const express = require("express");
 const bcrypt = require('bcryptjs');
+const qrcode = require('qrcode');
+const speakeasy = require('speakeasy');
 
 const { createToken, comparePassword, maxAge, generateOTP, checkEmail } = require("../modules/jwt-auth.modules.js");
 const isLoggedIn = require("../middleware/isLoggedIn.middleware.js");
 const user = require("../models/user.model.js");
 const { sendmail } = require("../modules/email.module.js");
 const otp = require("../models/otp.model.js");
+const secret = require("../modules/totp.module.js");
 
 const router = express.Router();
 
@@ -22,6 +25,11 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+router.get('/qrcode', async (req, res) => {
+    qrcode.toDataURL(secret.otpauth_url, function(err, data){
+        res.status(200).json(data);
+    });
+});
 
 /* LOGIN & AUTHENTICATION */
 router.post('/login', async (req, res) => {
@@ -31,14 +39,25 @@ router.post('/login', async (req, res) => {
         if (user_detail) {
             const valid = await comparePassword(req.body.password, user_detail.password)
             if (valid) {
-
-                res.redirect(`/user/authenticate/${user_detail.email}`);
-                // const token = createToken({ email: req.body.email });
-                // res.cookie('jwt', token, { httpOnly: true, maxAge: (maxAge * 1000) });
-                // res.status(200).json({
-                //     email: req.body.email
-                // });
-
+                const verified = speakeasy.totp.verify({
+                    secret: 'AVp7kne5W!>9l>QRBIehN9w3]t?BWSH6',
+                    encoding: 'ascii',
+                    token: req.body.totp
+                });
+                if(verified) {
+                    const token = createToken({ 
+                        email: user_detail.email
+                    });
+                    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
+                    res.status(200).json({
+                        token: token
+                    });
+                } else {
+                    res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
+                    res.status(401).json({
+                        error: "Invalid OTP"
+                    });
+                }
             } else {
                 res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
                 res.status(401).json({
@@ -56,70 +75,6 @@ router.post('/login', async (req, res) => {
     } catch (error){
         res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
         res.status(400).json({ error });
-    }
-});
-
-router.get('/authenticate/:email', async (req, res) => {
-    const otpDetail = await otp.findOne({ email: req.params.email });
-    if(!otpDetail){
-        const user_detail = await user.findOne({ email: req.params.email });
-        if (user_detail) {        
-            const token = createToken({ 
-                email: user_detail.email,
-                hash: await bcrypt.hash(user_detail.email, 10)
-            });
-            const otp_num = generateOTP();
-            const newOtp = await otp.create({
-                email: user_detail.email,
-                otp: otp_num,
-                token: token
-            });
-            newOtp.save().then(() => {
-                sendmail(req.params.email, otp_num)            
-                res.status(200).json({ message: "Email sent" });
-            });
-
-            } else {
-                res.status(404).json({ 
-                    error: "User not found"
-                });
-            }
-    } else {
-        res.status(429).json({ 
-            error: "OTP already sent"
-        });
-    }
-    
-});
-
-router.post('/authenticate', async (req, res) => {
-    const otp_detail = await otp.findOne({ email: req.body.email })
-                                    .select({
-                                        otp: 1,
-                                        token: 1,
-                                        _id: 0
-                                    });
-    if (otp) {
-        if (req.body.otp === otp_detail.otp) {
-            const {auth, email} = await checkEmail(otp_detail.token);
-            if (auth) {
-                if (email == req.body.email) {
-                    const token = createToken({ email: req.body.email });
-                    res.cookie('jwt', token, { httpOnly: true, maxAge: (maxAge * 1000) });
-                    res.status(200).json({
-                        email: req.body.email
-                    });
-                } else {
-                    res.status(400).json({ error: "Emails do not match" });
-                }
-            } else {
-                res.status(400).json({ error: "Invalid token" });
-            }
-        } else {
-            res.status(400).json({ error: "Invalid OTP" });
-        }
-    } else {
-        res.status(400).json({ error: "OTP not requested" });
     }
 });
 /* END : LOGIN & AUTHENTICATION */

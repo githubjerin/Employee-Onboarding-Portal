@@ -37,7 +37,8 @@
 
 {
     "email": "210701080@rajalakshmi.edu.in",
-    "password": "hayagreevan"
+    "password": "hayagreevan",
+    "totp": "222222"
 }
 
 
