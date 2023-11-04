@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema({
     userid: {
@@ -26,11 +26,13 @@ const Schema = mongoose.Schema({
     project: {
         projectid: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "project"
+            ref: "project",
+            default: null
         },
         manager: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "user"
+            ref: "user",
+            default: null
         },
         position: {
             type: String,
@@ -39,7 +41,8 @@ const Schema = mongoose.Schema({
     },
     hrid: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
+        ref: "user",
+        default: null
     },
     pan: {
         type: String,
@@ -72,4 +75,4 @@ const Schema = mongoose.Schema({
 
 const user = mongoose.model('user', Schema);
 
-export default user;
+module.exports = user;

@@ -17,3 +17,32 @@
     "address": "heaven",
     "phone": 4546785634
 }
+
+{
+    "userid": "001",
+    "email": "name@company.org",
+    "password": "admin",
+    "name": "Name",
+    "role": "EMPLOYEE",
+    "project": {
+        "position": "WORKER"
+    },
+    "pan": "OOOOO5674M",
+    "aadhar": 653437925492,
+    "doj": "2023-11-04T16:00:00.000Z",
+    "dob": "2003-08-23T16:00:00.000Z",
+    "address": "heaven",
+    "phone": 4546785634
+}
+
+{
+    "email": "210701080@rajalakshmi.edu.in",
+    "password": "hayagreevan"
+}
+
+
+/user/authenticate
+{
+    "email": "210701080@rajalakshmi.edu.in",
+    "otp": 688608
+}

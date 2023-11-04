@@ -1,10 +1,8 @@
-import nodemailer from 'nodemailer';
-import dotenv from 'dotenv';
-
-// import { checkEmail } from './jwt-auth.modules.js';
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 
 dotenv.config();
-// console.log(process.env.EMAIL_ADDRESS, process.env.EMAIL_PASSWORD)
+
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     port: 587,
@@ -15,7 +13,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-export async function sendMail(mail, token) {
+async function sendmail(mail, token) {
     const info = await transporter.sendMail({
         from: process.env.EMAIL_ADDRESS,
         to: mail,
@@ -26,3 +24,5 @@ export async function sendMail(mail, token) {
 
     return info;
 }
+
+module.exports = {sendmail};

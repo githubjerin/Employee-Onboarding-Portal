@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import dotenv from 'dotenv';
+const jwt = require("jsonwebtoken");
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -26,4 +26,4 @@ const isLoggedIn = async (req, res, next) => {
     }
 }
 
-export default isLoggedIn;
+module.exports = isLoggedIn;

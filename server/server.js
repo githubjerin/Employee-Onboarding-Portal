@@ -5,6 +5,9 @@ const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
+const userRouter = require("./routes/user.route.js");
+const logoutRouter = require("./routes/logout.route.js");
+
 dotenv.config();
 
 const app = express();
@@ -14,7 +17,7 @@ app.use(cors({
     credentials: true, 
     origin: [process.env.CORS_ACCEPTED_ORIGIN_1]
 }));
-app.use(json());
+app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieParser());
  
@@ -37,4 +40,5 @@ app.get('/', (req, res) => {
     res.send("Test");
 });
 
-// app.use("/user", userRouter);
+app.use("/user", userRouter);
+app.use("/logout", logoutRouter);

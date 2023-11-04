@@ -1,10 +1,10 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import speakeasy from "speakeasy";
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const speakeasy = require("speakeasy");
 
-export const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
+const maxAge = 1 * 24 * 60 * 60; // 1 day in seconds
 
-export function createToken(payload) {
+function createToken(payload) {
     const token = jwt.sign(
         payload,
         process.env.SECRET,
@@ -14,19 +14,19 @@ export function createToken(payload) {
     return token;
 }
 
-export async function comparePassword(pass, original) {
+async function comparePassword(pass, original) {
     const auth = await bcrypt.compare(pass, original);
     return auth;
 }
 
-export async function checkEmail(payload) {
+async function checkEmail(payload) {
     payload = jwt.verify(payload, process.env.SECRET);
 
     const auth = await bcrypt.compare(payload.email, payload.hash);
     return { auth: auth, email: payload.email };
 }
 
-export function generateOTP() {
+function generateOTP() {
     const secret = speakeasy.generateSecret();
 
     const token = speakeasy.totp({
@@ -36,3 +36,5 @@ export function generateOTP() {
 
     return token;
 }
+
+module.exports = { maxAge, createToken, comparePassword, checkEmail, generateOTP };
