@@ -1,9 +1,9 @@
-import express, { json } from "express";
-import cors from "cors";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
-import morgan from "morgan";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 
