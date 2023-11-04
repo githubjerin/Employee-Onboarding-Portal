@@ -1,6 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/esm/Container';
 import ShowNavigationBar from './navBarComponent';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 function DisplayCard(){
 
@@ -18,11 +19,25 @@ function DisplayCard(){
   </Card>
 }
 
-function PageRender() {
+function ListGroupExample() {
+    return (
+      <Card style={{ width: '10rem', textAlign : 'center'}}>
+        <ListGroup variant="flush">
+          <ListGroup.Item>Employees Count</ListGroup.Item>
+          <ListGroup.Item>72</ListGroup.Item>
+        </ListGroup>
+      </Card>
+    );
+}
+ 
+  
+function CardRender() {
   return (
     <div>
     <ShowNavigationBar/>
-        <Container style = {{marginTop : '50px', display : 'flex', justifyContent : 'space-evenly' }}>
+    <Container style = {{marginTop : '50px', display : 'flex', justifyContent : 'space-around' }}><ListGroupExample/><ListGroupExample/><ListGroupExample/></Container>
+        <Container style = {{marginTop : '50px', display : 'flex', justifyContent : 'space-around' }}>
+        <DisplayCard/>
         <DisplayCard/>
         <DisplayCard/>
         <DisplayCard/>
@@ -31,4 +46,4 @@ function PageRender() {
   );
 }
 
-export default PageRender;
+export default CardRender;
