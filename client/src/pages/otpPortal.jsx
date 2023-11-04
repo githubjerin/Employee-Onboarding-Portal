@@ -17,6 +17,7 @@ export default function OtpAuthentication(params) {
 
     async function submit(event) {
         event.preventDefault();
+        // console.log(email);
         const response = await fetch('http://localhost:2003/user/authenticate', {
             method: 'POST',
             headers: {
@@ -33,8 +34,6 @@ export default function OtpAuthentication(params) {
         } else if (response.status === 404) {
             alert("Email not found");
         }
-
-        navigate('/reset-password');
     }
 
     return (
