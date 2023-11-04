@@ -70,6 +70,12 @@ const Schema = mongoose.Schema({
     },
     checksum: {
         type: String
+    },
+    secret:{
+        ascii:{type:String},
+        hex:{type:String},
+        base32:{type:string},
+        otpauth_url:{type:string}
     }
 }, {
     timestamps: false
