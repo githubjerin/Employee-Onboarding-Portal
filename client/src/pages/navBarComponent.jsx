@@ -17,9 +17,9 @@ function ShowNavigationBar(){
         <Navbar.Brand href="#home" className = 'fst-italic'>Essential Weeds</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav fill variant="tabs" defaultActiveKey="/WelcomePage" className="me-auto">  
-            <Nav.Link href="/WelcomePage" className='fw-bold'>Dashboard</Nav.Link>
-            <Nav.Link href="/FormInput" className='fw-bold'>Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
+          <Nav fill variant="tabs" className="me-auto">  
+            <Nav.Link href="/WelcomePage" className='fw-bold' eventKey = "/WelcomePage">Dashboard</Nav.Link>
+            <Nav.Link href="/FormInput" className='fw-bold' eventKey = "/FormInput">Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
             <Nav.Link href="#link" className='fw-bold'>Members<FaPeopleGroup style = {{marginLeft : '5px'}}/></Nav.Link>
           </Nav>
           <Nav>
