@@ -48,7 +48,7 @@ export default function Landing() {
                 credentials: 'include'
             });
             if (response.status === 200) {
-                // navigate('/otp-authentication',{state:{email:email}});
+                navigate('/welcomepage',{state:{email:email}});
             } else {
                 alert('Invalid email or password');
             }
@@ -108,10 +108,7 @@ export default function Landing() {
                                 </div>
                             </div>   
                         </div>
-                        <div className="mt-5 text-center text-white-50" style={{display: "flex", justifyContent: "center"}}> 
-                            <p>Don't have an account ? </p> &nbsp;&nbsp;
-                            <p className="fw-bold text-black button" onClick={ signup }> Register</p>
-                        </div>
+                        
                         </div>
                     </div>
                 </div>

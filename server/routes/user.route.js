@@ -17,7 +17,14 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
     try {
         req.body.password = await bcrypt.hash(req.body.password, 10);
-        req.body.checksum = crypto.createHash('sha256').update(JSON.stringify({
+        console.log(JSON.stringify({
+            pan: req.body.pan,
+            aadhar: req.body.aadhar,
+            dob: req.body.dob,
+            address: req.body.address,
+            phone: req.body.phone
+        }));
+        req.body.checksum = crypto.createHash('sha256').update( JSON.stringify({
             pan: req.body.pan,
             aadhar: req.body.aadhar,
             dob: req.body.dob,
@@ -60,14 +67,15 @@ router.post('/login', async (req, res) => {
 
         if (user_detail) {
             const valid = await comparePassword(req.body.password, user_detail.password)
+
             
             if (valid) {
-                // res.redirect(`/user/authenticate/${user_detail.email}`);
                 const verified= speakeasy.totp.verify({
                     secret: user_detail.secret.ascii,
                     encoding: 'ascii',
                     token: req.body.totp
                 });
+
                 if(verified) {
                     const token = createToken({ 
                         email: user_detail.email
@@ -96,6 +104,7 @@ router.post('/login', async (req, res) => {
     }
     catch (error){
         res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
+        console.log(error);
         res.status(400).json({ error });
     }
 });
@@ -103,29 +112,29 @@ router.post('/login', async (req, res) => {
 
 
 
-router.get('/authenticate/:email', function(req, res){
-    const user =  user_detail.findOne({ email: req.body.email });
-    //res.redirect('/authenticate',{params:user_detail.secret.ascii})
-    const verified= speakeasy.totp.verify({
-        secret: user_detail.secret.ascii,
-        encoding: 'ascii',
-        token: req.body.totp
-    });
-    if(verified) {
-        const token = createToken({ 
-            email: user_detail.email
-        });
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
-        res.status(200).json({
-            token: token
-        });
-    } else {
-        res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
-        res.status(401).json({
-            error: "Invalid OTP"
-        });
-    }
-});
+// router.get('/authenticate/:email', function(req, res){
+//     const user =  user_detail.findOne({ email: req.body.email });
+//     //res.redirect('/authenticate',{params:user_detail.secret.ascii})
+//     const verified= speakeasy.totp.verify({
+//         secret: user_detail.secret.ascii,
+//         encoding: 'ascii',
+//         token: req.body.totp
+//     });
+//     if(verified) {
+//         const token = createToken({ 
+//             email: user_detail.email
+//         });
+//         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge });
+//         res.status(200).json({
+//             token: token
+//         });
+//     } else {
+//         res.cookie('jwt', '', { httpOnly: true, maxAge: 1 });
+//         res.status(401).json({
+//             error: "Invalid OTP"
+//         });
+//     }
+// });
 /* END : LOGIN & AUTHENTICATION */
 
 router.get('/get-details', isLoggedIn, async (req, res) => {
@@ -135,15 +144,17 @@ router.get('/get-details', isLoggedIn, async (req, res) => {
                                         _id: 0,
                                         __v: 0
                                     });
-    
+    console.log(user_detail);
     if (user_detail) {
-        const checksum = crypto.createHash('sha256').update(JSON.stringify({
-            pan: req.body.pan,
-            aadhar: req.body.aadhar,
-            dob: req.body.dob,
-            address: req.body.address,
-            phone: req.body.phone
+        const checksum = crypto.createHash('sha256').update( JSON.stringify({
+            pan: user_detail.pan,
+            aadhar: user_detail.aadhar,
+            dob: user_detail.dob,
+            address: user_detail.address,
+            phone: user_detail.phone
         })).digest('hex');
+        console.log(checksum, user_detail.checksum);
+
         if(checksum === user_detail.checksum) {
             res.status(200).json(user_detail);
         } else {

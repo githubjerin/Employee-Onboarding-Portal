@@ -43,6 +43,11 @@ export default function ResetPassword() {
             credentials: 'include'
         });    
         console.log(response);    
+        if (response.status === 200) {
+            navigate('/');
+        } else {
+            alert('Invalid credentials');
+        }
     }
 
     async function signin() {
