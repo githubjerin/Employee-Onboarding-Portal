@@ -63,7 +63,8 @@ export default function WelcomePage() {
                             </div>
                                 <p className="fs-20">We're dedicated to excellence and your satisfaction. Explore our offerings and experience the difference.</p>
                                 <div className="home-btn hstack gap-2 flex-column d-sm-block">
-                                    <p className="btn btn-primary me-1" onClick={logout}>Logout</p>
+                                    {/* <p className="btn btn-primary me-1" onClick={logout}>Logout</p> */}
+                                    <button className="btn btn-primary me-1"><a href="/FormInput"><span style = {{color : "white"}}>Get Started!</span></a></button>
                                 </div>
                         </div>
                         <div className="col-lg-5">
