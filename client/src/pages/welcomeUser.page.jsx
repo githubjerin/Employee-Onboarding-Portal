@@ -7,6 +7,9 @@ import '../res/css/style.min.css';
 import home from '../res/images/home.png';
 import home1 from '../res/images/home-1.png';
 import home2 from '../res/images/home-2.png';
+import ShowNavigationBar from "./navBarComponent.jsx";
+
+
 
 export default function WelcomePage() {
     const [username, setUsername] = React.useState(' ');
@@ -46,8 +49,9 @@ export default function WelcomePage() {
       }, []);
 
     return (
+        <div>
+        <ShowNavigationBar></ShowNavigationBar>
         <div data-bs-spy="scroll" data-bs-target="#" data-bs-offset="71">            
-
         <div className="overflow-hidden-x">
             <section className="section home home-6" id="home">
             <div className="bg-overlay"></div>
@@ -73,6 +77,7 @@ export default function WelcomePage() {
                 </div>
             </section>
         </div>
+    </div>
     </div>
     );
 }

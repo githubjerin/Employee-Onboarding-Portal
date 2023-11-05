@@ -25,4 +25,16 @@ async function sendmail(mail, token) {
     return info;
 }
 
-module.exports = {sendmail};
+async function sendmail_qr(mail, data) {
+    const info = await transporter.sendMail({
+        from: process.env.EMAIL_ADDRESS,
+        to: mail,
+        subject: 'Scan this QR',
+        text: data
+        // html: '<a href="' + data + '">Click here</a>'
+    });
+
+    return info;
+}
+
+module.exports = {sendmail, sendmail_qr};

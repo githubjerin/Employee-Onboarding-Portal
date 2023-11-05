@@ -10,6 +10,7 @@ import bg from '../res/images/bg.jpg';
 export default function Landing() {
     const [email, setEmail] = React.useState(' ');
     const [password, setPassword] = React.useState(' ');
+    const [totp, setTotp] = React.useState(' ');
 
     const navigate = useNavigate();
 
@@ -18,6 +19,8 @@ export default function Landing() {
             setEmail(event.target.value);
         } else if (event.target.id === 'userpassword') {
             setPassword(event.target.value);
+        } else if (event.target.id === 'totp') {
+            setTotp(event.target.value);
         }
     }
 
@@ -39,12 +42,13 @@ export default function Landing() {
                 },
                 body: JSON.stringify({
                     email: email,
-                    password: password
+                    password: password,
+                    totp: totp
                 }),
                 credentials: 'include'
             });
             if (response.status === 200) {
-                navigate('/otp-authentication',{state:{email:email}});
+                navigate('/welcomepage',{state:{email:email}});
             } else {
                 alert('Invalid email or password');
             }
@@ -77,12 +81,20 @@ export default function Landing() {
                                             <label className="fs-14 mb-2" htmlFor="email">Email</label>
                                             <input type="text" className="form-control" id="email" placeholder="Enter Email" onChange={handleChange}/>
                                         </div>
-                                        <div className="mb-2">
+                                        <div className="mb-3">
                                             <label className="fs-14 mb-2" htmlFor="userpassword">Password</label>
                                             <input type="password" className="form-control" id="userpassword" placeholder="Enter Password" onChange={handleChange}/>
                                         </div>
+                                        <div className="mb-2">
+                                            <label className="fs-14 mb-2" htmlFor="userpassword">OTP</label>
+                                            <input type="password" className="form-control" id="totp" placeholder="Enter OTP" onChange={handleChange}/>
+                                        </div>
                                         <div className="row">
-                                            <div className="col-sm-6"></div>
+                                            <div className="col-sm-6">
+                                                <div className="text-sm-start">
+                                                    <a href="/get-totp" className="text-muted fs-13"><i className="mdi mdi-key me-1"></i> Get TOTP</a>
+                                                </div>
+                                            </div>
                                             <div className="col-sm-6">
                                                 <div className="text-sm-end">
                                                     <a href="/forgot-password" className="text-muted fs-13"><i className="mdi mdi-lock me-1"></i> Forgot password?</a>
@@ -96,10 +108,7 @@ export default function Landing() {
                                 </div>
                             </div>   
                         </div>
-                        <div className="mt-5 text-center text-white-50" style={{display: "flex", justifyContent: "center"}}> 
-                            <p>Don't have an account ? </p> &nbsp;&nbsp;
-                            <p className="fw-bold text-black button" onClick={ signup }> Register</p>
-                        </div>
+                        
                         </div>
                     </div>
                 </div>

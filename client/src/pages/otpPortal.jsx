@@ -5,8 +5,15 @@ import '../res/css/bootstrap.min.css';
 import '../res/css/materialdesignicons.min.css';
 import '../res/css/style.min.css';
 import bg from '../res/images/bg.jpg';
+// import { useLocation } from "react-router-dom";
+
+// const location = useLocation();
+
+// get userId
+// const email = location.state.email;
 
 export default function OtpAuthentication() {
+    // const location = useLocation();
     const [email, setEmail] = React.useState('');
 
     const navigate = useNavigate();
@@ -17,7 +24,7 @@ export default function OtpAuthentication() {
 
     async function submit(event) {
         event.preventDefault();
-        const response = await fetch('http://localhost:2003/user/forgot-password', {
+        const response = await fetch('http://localhost:2003/user/qrcode/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,13 +34,13 @@ export default function OtpAuthentication() {
             }),
             credentials: 'include'
         });
-        if (response.status === 429) {
-            alert("OTP already sent");
+        if (response.status === 200) {
+            alert("OTP sent");
         } else if (response.status === 404) {
             alert("Email not found");
         }
 
-        navigate('/reset-password');
+        navigate('/');
     }
 
     return (
@@ -45,7 +52,7 @@ export default function OtpAuthentication() {
                      <div className="card overflow-hidden mt-2">
                          <div className="text-center bg-primary position-relative">
                              <div className="position-relative pt-4 py-5 mb-1">
-                                 <h5 className="text-white">Forgot your password ?</h5>
+                                 <h5 className="text-white">Request for new TOTP ?</h5>
                              <p className="text-white-50 mb-0 fs-14" style={{ textAlign: "left", paddingLeft: "15px" }}>Tell us your email address, and we will get you back on track in no time.</p>
                              </div>
                          </div>
@@ -53,11 +60,11 @@ export default function OtpAuthentication() {
                             <div className="p-4 mt-n5 bg-white card rounded pb-0">
                                 <form onSubmit={submit}>
                                     <div className="mb-3">
-                                        <label className="fs-14 mb-2" htmlFor="email">Email</label>
+                                        <label className="fs-14 mb-2" htmlFor="email">Enter Email</label>
                                         <input type="text" className="form-control" id="email" placeholder="Enter Email" onChange={handleChange}/>
                                     </div>
                                     <div className="mt-4">
-                                        <button className="btn btn-primary w-100" type="submit">Send OTP</button>
+                                        <button className="btn btn-primary w-100" type="submit">Send QR</button>
                                     </div>
                                 </form>
                             </div>

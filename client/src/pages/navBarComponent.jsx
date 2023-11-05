@@ -18,7 +18,7 @@ function ShowNavigationBar(){
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav fill variant="tabs" defaultActiveKey="/PageRender" className="me-auto">  
             <Nav.Link href="/PageRender" className='fw-bold'>Dashboard</Nav.Link>
-            <Nav.Link href="#home" className='fw-bold'>Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
+            <Nav.Link href="/FormInput" className='fw-bold'>Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
             <Nav.Link href="#link" className='fw-bold'>Members<FaPeopleGroup style = {{marginLeft : '5px'}}/></Nav.Link>
           </Nav>
           <Nav>

@@ -25,7 +25,7 @@ function App() {
           <Route path="/forgot-password" element={ <ForgotPassword navigate={useNavigate}/> }/>
           <Route path="/reset-password" element={ <ResetPassword navigate={useNavigate}/> }/>
           <Route path="/welcomepage" element={ <WelcomePage navigate={useNavigate}/> }/>
-          <Route path='/otp-authentication' element={ <OtpAuthentication navigate={useNavigate}/> }/>
+          <Route path='/get-totp' element={ <OtpAuthentication navigate={useNavigate}/> }/>
           <Route path="/PageRender" element={ <PageRender navigate={useNavigate}/> }/>
           <Route path="/FormInput" element={<FormInput navigate={useNavigate}/> }/>
         </Routes>
