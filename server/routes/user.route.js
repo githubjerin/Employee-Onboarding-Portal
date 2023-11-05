@@ -238,4 +238,25 @@ router.post('/reset-password', async (req, res) => {
     }
 });
 
+router.get('/get-employee-details', isLoggedIn, async (req, res) => {
+    await user.findOne({ email: req.user.email }).select({ __v: 0 }).then(async (user_detail) => {
+        console.log(user_detail);
+    if (user_detail.role === "HR") {
+        console.log("hi");
+        await user.find({ hrid: user_detail._id }).then(async (employee_details) => {
+            console.log(employee_details);
+            if (employee_details) {
+                res.status(200).json(employee_details);
+            } else {
+                res.status(400).json({ error: "No Employees found" });
+            }
+        });
+        
+    } else {
+        res.status(400).json({ error: "You are not an HR" });
+    }
+    });
+    
+});
+
 module.exports = router;
