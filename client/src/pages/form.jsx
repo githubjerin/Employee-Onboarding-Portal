@@ -9,6 +9,7 @@ import { useRef } from 'react';
 import axios from "axios";
 import ShowNavigationBar from "./navBarComponent.jsx";
 //import { Form, Button } from 'react-bootstrap';
+import bg from "../res/images/2947.jpg";
 
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
 const st={
@@ -25,7 +26,6 @@ function FormInput() {
     const [formData, setFormData] = useState({
         fname: '',
         lname:'',
-        pass:'',
         phone:'',
         dob:'',
       address1: '',
@@ -68,7 +68,7 @@ function FormInput() {
   }
 };
   return (
-    <div><ShowNavigationBar /> 
+    <div style={{backgroundImage :`url(${bg})` ,backgroundSize : 'cover'}}><ShowNavigationBar /> 
     <Container style={st}>
   
     <Form onSubmit={handleSubmit} >
@@ -100,18 +100,19 @@ function FormInput() {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
         <FloatingLabel
+        label="Email Id"
         controlId="floatingInput"
         className="mb-3">
-          <Form.Control type="email" placeholder="" value="haresh66@gmail.com" disabled={true} />
+          <Form.Control type="email" placeholder="Email" value="haresh66@gmail.com" disabled={true} />
           </FloatingLabel>
         </Form.Group>
 
        
-        <Form.Group as={Col} controlId="formGridPassword">
+        <Form.Group as={Col} controlId="formGridEmpid">
           <FloatingLabel controlId="floatingInput"
-        label="Password"
+        label="Employee Id"
         className="mb-3">
-          <Form.Control type="password" placeholder="Password" onChange={handleInputChange} name="pass" value={formData.pass}/>
+          <Form.Control  placeholder="EmpID"  value="002"  disabled={true}/>
           </FloatingLabel>
         </Form.Group>
 
@@ -210,12 +211,13 @@ function FormInput() {
       </Row>
       </div>
       <div className="mb-3">
+      <h6>Aadhar Card/Pan Card (Upload)</h6>
       <Form.Control id="image" type="file" name="image" onChange={handleInputChange}/>
 
       </div>
   
 
-      <Button variant="primary" type="submit">
+      <Button variant="white" type="submit">
         Submit
       </Button>
 
