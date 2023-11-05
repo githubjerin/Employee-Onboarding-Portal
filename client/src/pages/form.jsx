@@ -11,6 +11,9 @@ import ShowNavigationBar from "./navBarComponent.jsx";
 //import { Form, Button } from 'react-bootstrap';
 import bg from "../res/images/2947.jpg";
 
+
+
+
 import FloatingLabel from 'react-bootstrap/esm/FloatingLabel';
 const st={
     marginTop:"70px",
@@ -131,11 +134,11 @@ function FormInput() {
 
 
         <Form.Group as={Col} controlId="formGriddob">
-          <FloatingLabel controlId="floatingInput"
-        label="Date of Birth (mm/dd/yyyy)"
-        className="mb-3">
-          <Form.Control  placeholder="Date of Birth" onChange={handleInputChange} name="dob" value={formData.dob}/>
-          </FloatingLabel>
+        <FloatingLabel controlId="floatingInput" 
+         label="Date of Birth (mm/dd/yyyy)"
+        className="mb-3"> 
+        <Form.Control type="Date" placeholder="Date of Birth" onChange={handleInputChange} name="dob" value={formData.dob}/>
+        </FloatingLabel> 
         </Form.Group>
       </Row>
       <Form.Group className="mb-3" controlId="formGridAddress1">

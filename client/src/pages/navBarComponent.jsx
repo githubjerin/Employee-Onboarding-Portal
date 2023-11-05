@@ -11,15 +11,18 @@ import {WelcomePage} from './welcomeUser.page';
 const st={
   backgroundColor: "transparent" 
 };
+ 
 function ShowNavigationBar(){
+
+
     return <Navbar expand="lg" style={st} className="bg-body-tertiary">
         <Container>
         <Navbar.Brand href="#home" className = 'fst-italic'>Essential Weeds</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav fill variant="tabs" defaultActiveKey="/WelcomePage" className="me-auto">  
-            <Nav.Link href="/WelcomePage" className='fw-bold'>Dashboard</Nav.Link>
-            <Nav.Link href="/FormInput" className='fw-bold'>Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
+          <Nav fill variant="tabs" ActiveKey="/WelcomePage" className="me-auto">  
+            <Nav.Link href="/WelcomePage" className='fw-bold' >Dashboard</Nav.Link>
+            <Nav.Link href="/FormInput" className='fw-bold' >Onboarding<BsBriefcaseFill style = {{marginLeft : '5px'}}/></Nav.Link>
             <Nav.Link href="#link" className='fw-bold'>Members<FaPeopleGroup style = {{marginLeft : '5px'}}/></Nav.Link>
           </Nav>
           <Nav>
