@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/esm/Container';
 import ShowNavigationBar from './navBarComponent';
 import ListGroup from 'react-bootstrap/ListGroup';
+import bg from '../res/images/bg.jpg';
 
 function DisplayCard(){
 
@@ -33,7 +34,7 @@ function ListGroupExample() {
   
 function PageRender() {
   return (
-    <div>
+    <div style = {{backgroundImage : `url(${bg})` , backgroundSize : 'cover' }}>
     <ShowNavigationBar/>
     <Container style = {{marginTop : '50px', display : 'flex', justifyContent : 'space-around' }}><ListGroupExample/><ListGroupExample/><ListGroupExample/></Container>
         <Container style = {{marginTop : '50px', display : 'flex', justifyContent : 'space-around' }}>
