@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import Container from 'react-bootstrap/esm/Container';
+import Container from 'react-bootstrap/Container';
 import ShowNavigationBar from './navBarComponent';
 import ListGroup from 'react-bootstrap/ListGroup';
 import bg from '../res/images/bg.jpg';
