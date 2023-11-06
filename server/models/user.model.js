@@ -45,28 +45,26 @@ const Schema = mongoose.Schema({
         default: null
     },
     pan: {
-        type: String,
-        required: true
+        type: String
     },
     aadhar: {
-        type: Number,
-        required: true
+        type: Number
     },
     doj: {
-        type: Date,
-        required: true
+        type: Date
+
     },
     dob: {
-        type: Date,
-        required: true
+        type: Date
     },
     address: {
-        type: String, 
-        required: true
+        type: String 
     },
     phone: {
-        type: Number,
-        required: true
+        type: Number
+    },
+    image:{
+        type: String
     },
     checksum: {
         type: String

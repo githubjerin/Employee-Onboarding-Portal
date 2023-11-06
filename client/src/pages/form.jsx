@@ -55,15 +55,28 @@ function FormInput() {
     
       const handleSubmit = async(e) => {
         e.preventDefault();
-        
+        console.log(formData);
 
   try { 
-    const response = await axios.post('http://192.168.137.1:3001/post', formData,{
+    const response = await axios.post('http://localhost:2003/user/formupdate', formData,{
         headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+            'Content-Type': `multipart/form-data`,
+          }, 
+          withCredentials:true,
     });
-
+     /*   const response = await fetch('http://localhost:2003/user/formupdate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            credentials: 'include',
+            body: JSON.stringify(formData)
+        });
+        if (response.status === 200) {
+            const data = await response.json();
+            console.log(data);
+        } 
+        */
       console.log('Form data submitted successfully');
       // You can reset the form or perform other actions here
   } catch (error) {

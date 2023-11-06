@@ -3,13 +3,16 @@ const bcrypt = require('bcryptjs');
 const qrcode = require('qrcode');
 const speakeasy = require('speakeasy');
 const crypto = require('crypto');
-
+const multer = require('multer');
 const { createToken, comparePassword, maxAge, generateOTP, checkEmail } = require("../modules/jwt-auth.modules.js");
 const isLoggedIn = require("../middleware/isLoggedIn.middleware.js");
 const user = require("../models/user.model.js");
 const { sendmail , sendmail_qr} = require("../modules/email.module.js");
 const otp = require("../models/otp.model.js");
 const secret = require("../modules/totp.module.js");
+const fs = require('fs').promises;
+const { PDFDocument, rgb } = require('pdf-lib');
+const Jimp = require('jimp');
 
 const router = express.Router();
 
@@ -136,6 +139,70 @@ router.post('/login', async (req, res) => {
 //     }
 // });
 /* END : LOGIN & AUTHENTICATION */
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "Docs");
+    },
+    filename: (req, file, cb) => {
+      const ext = file.mimetype.split("/")[1];
+      cb(null, `${file.filename}-${Date.now()}.${ext}`);
+    },
+  });
+
+  const upload = multer({
+    storage: multerStorage,
+  });
+
+router.post('/formupdate', upload.single("image"), isLoggedIn, async(req,res)=>{
+    const file = req.file;
+    console.log(req.body);
+    const watermarkText = "This is Confidential";
+    const opacity=0.5;
+    try {
+        // Load the uploaded PDF document
+        const existingPdfBuffer = await fs.readFile(file.path);
+        const pdfDoc = await PDFDocument.load(existingPdfBuffer);
+    
+        // Get the first page of the PDF
+        const [page] = pdfDoc.getPages();
+    
+        // Calculate coordinates for the center of the page
+        const { width, height } = page.getSize();
+        const textSize = 20; // Adjust text size as needed
+        const textWidth = textSize * watermarkText.length;
+        const textHeight = textSize;
+        const x = (width - textWidth);
+        const y = (height - textHeight);
+    
+        // Create a color with an alpha channel (opacity)
+        const color = rgb(0, 0, 0);
+        color.a = 1 - opacity; // Invert the opacity value
+    
+        // Add the transparent watermark text at the calculated center coordinates
+        page.drawText(watermarkText, {
+          x,
+          y,
+          size: textSize,
+          color,
+        });
+    
+        // Serialize the modified PDF document
+        const modifiedPdfBuffer = await pdfDoc.save();
+    
+        // Save the modified PDF back to the storage destination (Docs directory)
+        await fs.writeFile(file.path, modifiedPdfBuffer);
+    
+        console.log('PDF with transparent watermark added at the center and saved successfully.');
+        res.status(200).send('PDF with transparent watermark saved.');
+      } catch (err) {
+        console.error(err);
+        res.status(500).send('Error processing the PDF.');
+      }
+    console.log(file);
+    const newImage = await user.updateOne({email:req.user.email},{
+        image:req.file.filename
+    })
+})
 
 router.get('/get-details', isLoggedIn, async (req, res) => {
     const user_detail = await user.findOne({ email: req.user.email })
